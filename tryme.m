@@ -76,7 +76,7 @@ if flip  == 0
     legend(num2str(count))
     count = count +1;
 else
-    plot(tr(count-1,:))
+    plot(tr(count-2,:))
     legend(num2str(count))
     count = count - 1;
     
