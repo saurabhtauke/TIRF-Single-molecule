@@ -1,6 +1,6 @@
 clear all
 
-load('Rhoda32_3.mat')
+load('QD640.mat')
 
 %%
 myvars = string(who);
@@ -26,8 +26,8 @@ for i = 1: datlen
 end
 
 %%
-f = figure(1);
-g = figure(2);
+%f = figure(1);
+%g = figure(2);
 count = 1;
 for i = 1 : datlen*5
 
@@ -38,30 +38,25 @@ for i = 1 : datlen*5
 
 
 if value  == 29
-    plot(time,trr(count,:))
+    subplot(2,1,1), plot(time,trr(count,:))
      legend(num2str(count))
     
    
-    figure(1)
-    plot(corrtime, attr(count,:))
+    %figure(1)
+    subplot(2,1,2), loglog(corrtime, attr(count,:))
     legend(num2str(count))
-    figure(2)
+    %figure(2)
     count = count+1;
     
 elseif  value ==28
-    plot(time,trr(count-2,:))
+    subplot(2,1,1), plot(time,trr(count-2,:))
      legend(num2str(count-2))
      
-     figure(1)
-    plot(corrtime,attr(count,:))
+     %figure(1)
+    subplot(2,1,2), loglog(corrtime,attr(count,:))
     legend(num2str(count-2))
-    figure(2)
+    %figure(2)
     count = count -1;
 end
 
 end
-
-
-
-
-
