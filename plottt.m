@@ -1,6 +1,9 @@
 clear all
 
-load('QD640.mat')
+
+warning('off', 'curvefit:fit:invalidStartPoint' );
+
+load('10.mat')
 
 %%
 myvars = string(who);
@@ -14,15 +17,25 @@ time = time *30/1000;
 
 num = 500;
 corrtime = (1:num+1)*30/1000;
+trant = transpose(corrtime);
 
+fitco = zeros(datlen,2);
 
 for i = 1: datlen
     trr(i,:) = eval(myvars(count+datlen))./eval(myvars(count));
     clear((myvars(count)))
     
     attr(i,:) = autocorr(trr(i,:),'NumLags',num);
-    count = count +1;
     
+    trana = transpose(attr(i,:));
+    
+    lup = fit(trant,trana,'Exp1');
+    
+    ccc = coeffvalues(lup);
+    fitco(i,1) = ccc(1);
+    fitco(i,2) = ccc(2);
+    
+     count = count +1;
 end
 
 %%
@@ -43,7 +56,7 @@ if value  == 29
     
    
     %figure(1)
-    subplot(2,1,2), loglog(corrtime, attr(count,:))
+    subplot(2,1,2), plot(corrtime, attr(count,:))
     legend(num2str(count))
     %figure(2)
     count = count+1;
@@ -53,10 +66,12 @@ elseif  value ==28
      legend(num2str(count-2))
      
      %figure(1)
-    subplot(2,1,2), loglog(corrtime,attr(count,:))
+    subplot(2,1,2), plot(corrtime,attr(count,:))
     legend(num2str(count-2))
     %figure(2)
     count = count -1;
 end
 
 end
+
+
