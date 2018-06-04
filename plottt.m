@@ -73,5 +73,3 @@ elseif  value ==28
 end
 
 end
-
-
